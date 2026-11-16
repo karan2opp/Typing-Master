@@ -1,44 +1,24 @@
+/* Dark theme, always: it does not follow the computer's light/dark setting. */
 :root {
-  --bg: #f6f7f9;
-  --card: #ffffff;
-  --text: #1c2330;
-  --muted: #6b7587;
-  --line: #e1e5ec;
-  --accent: #2563eb;
-  --accent-text: #ffffff;
-  --ok: #16803c;
-  --bad: #c62828;
-  --bad-bg: #fde8e8;
-  --caret: #d19900;
-  /* Big result numbers: a deeper amber so it still reads on a light page. */
-  --hero: #a87700;
+  color-scheme: dark;
+  --bg: #0f1420;
+  --card: #182030;
+  --text: #e6eaf2;
+  --muted: #93a0b8;
+  --line: #2a3447;
+  --accent: #5b8def;
+  --accent-text: #0b1020;
+  --ok: #5fd08a;
+  --bad: #ff8a8a;
+  --bad-bg: #4a2327;
+  --caret: #e2b714;
+  --hero: #e2b714;
   --mono: "Roboto Mono", "Cascadia Mono", Consolas, monospace;
   /* Chart series; validated for colour-blind separation on --bg. */
-  --series-wpm: #b07f00;
-  --series-burst: #4f74c8;
-  --series-error: #c8336a;
-  --grid: #e3e7ee;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0f1420;
-    --card: #182030;
-    --text: #e6eaf2;
-    --muted: #93a0b8;
-    --line: #2a3447;
-    --accent: #5b8def;
-    --accent-text: #0b1020;
-    --ok: #5fd08a;
-    --bad: #ff8a8a;
-    --bad-bg: #4a2327;
-    --caret: #e2b714;
-    --hero: #e2b714;
-    --series-wpm: #b88e08;
-    --series-burst: #5f86d8;
-    --series-error: #e0457b;
-    --grid: #1f2738;
-  }
+  --series-wpm: #b88e08;
+  --series-burst: #5f86d8;
+  --series-error: #e0457b;
+  --grid: #1f2738;
 }
 
 * {
