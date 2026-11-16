@@ -1,0 +1,15 @@
+appId: com.typingmaster.desktop
+productName: Typing Master
+directories:
+  output: release
+files:
+  - out/**
+win:
+  target:
+    - target: nsis
+      arch: [x64]
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  artifactName: TypingMaster-Setup-${version}.${ext}

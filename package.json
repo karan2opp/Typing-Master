@@ -1,0 +1,25 @@
+{
+  "name": "typing-master",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "pnpm@10.34.4",
+  "scripts": {
+    "dev:web": "pnpm --filter @typing/web dev",
+    "dev:desktop": "pnpm --filter @typing/desktop dev",
+    "build:web": "pnpm --filter @typing/web build",
+    "build:desktop": "pnpm --filter @typing/desktop build:win",
+    "test": "pnpm -r test",
+    "typecheck": "pnpm -r typecheck",
+    "build:site": "node scripts/build-site.mjs"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "electron",
+      "esbuild"
+    ]
+  },
+  "devDependencies": {
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.0"
+  }
+}

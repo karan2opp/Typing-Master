@@ -1,0 +1,630 @@
+/* ======================================================================
+   App chrome: header, pages, forms, tables, dialogs.
+   The typing screen's own styles are in styles.css; both use the same colour tokens.
+   ====================================================================== */
+
+.app {
+  max-width: 1100px;
+}
+
+.splash {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 20px;
+}
+
+.grow {
+  flex: 1;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.center-text {
+  text-align: center;
+  margin-top: 20vh;
+}
+
+.top {
+  flex-wrap: wrap;
+  transition: opacity 200ms;
+}
+
+.top.faded {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.nav {
+  display: flex;
+  gap: 4px;
+  margin-left: 12px;
+}
+
+.nav a {
+  padding: 6px 12px;
+  border-radius: 8px;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 15px;
+}
+
+.nav a:hover {
+  color: var(--text);
+}
+
+.nav a.on {
+  color: var(--text);
+  background: var(--card);
+  box-shadow: inset 0 -2px 0 var(--caret);
+}
+
+.who {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.syncpill {
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 13px;
+  border-color: var(--line);
+  color: var(--muted);
+}
+
+.syncpill.ok span {
+  color: var(--ok);
+}
+
+.syncpill.warn span {
+  color: var(--caret);
+}
+
+.syncpill.info span {
+  color: var(--accent);
+}
+
+.page {
+  padding: 8px 0 48px;
+}
+
+.page.narrow {
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.page-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.page-head h2 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.section-title {
+  margin: 28px 0 12px;
+  font-size: 14px;
+  color: var(--muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 0;
+}
+
+.card h3 {
+  margin: 0;
+  font-size: 17px;
+}
+
+.card p {
+  margin: 8px 0 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 14px;
+}
+
+.test-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.row.end {
+  justify-content: flex-end;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.empty {
+  padding: 24px 0;
+}
+
+/* ---------- Forms ---------- */
+
+input,
+select,
+textarea {
+  font: inherit;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 10px;
+  min-width: 0;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+  border-color: transparent;
+}
+
+textarea {
+  width: 100%;
+  resize: vertical;
+}
+
+.field-block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field-block input,
+.field-block select {
+  width: 100%;
+}
+
+.field-name {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.field-hint {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 14px;
+}
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.filters-row,
+.tabs {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.filters-row label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.filters-row input[type="search"] {
+  min-width: 240px;
+}
+
+.tab {
+  background: none;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  padding: 8px 12px;
+  color: var(--muted);
+}
+
+.tab.on {
+  color: var(--text);
+  border-bottom-color: var(--caret);
+}
+
+button.danger {
+  background: var(--bad);
+  border-color: var(--bad);
+  color: #fff;
+}
+
+button.icon {
+  border: 0;
+  background: none;
+  padding: 4px 8px;
+  color: var(--muted);
+}
+
+/* A button that reads as a text link. */
+button.link {
+  border: 0;
+  background: none;
+  padding: 0;
+  color: var(--accent);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+button.link:hover {
+  border: 0;
+  color: var(--text);
+}
+
+.chip {
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 14px;
+}
+
+.inline-form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.inline-form span {
+  flex: 1 1 320px;
+}
+
+.error-text {
+  color: var(--bad);
+  margin: 8px 0 0;
+}
+
+/* ---------- Tables ---------- */
+
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--card);
+}
+
+table.data {
+  font-size: 14px;
+}
+
+table.data th {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+table.data th,
+table.data td {
+  padding: 10px 14px;
+}
+
+table.data tr:last-child td {
+  border-bottom: 0;
+}
+
+table.data .num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+table.data .strong {
+  font-weight: 600;
+}
+
+table.data td.actions {
+  text-align: right;
+  white-space: nowrap;
+}
+
+table.data td.actions button {
+  margin-left: 6px;
+  padding: 4px 10px;
+  font-size: 13px;
+}
+
+table.data tr.mine {
+  background: color-mix(in srgb, var(--caret) 14%, transparent);
+}
+
+table.data tr.dim td {
+  opacity: 0.55;
+}
+
+table.data tr.flagged {
+  background: color-mix(in srgb, var(--caret) 10%, transparent);
+}
+
+table.clickable tbody tr {
+  cursor: pointer;
+}
+
+table.clickable tbody tr:hover {
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+}
+
+.you {
+  color: var(--caret);
+  font-size: 12px;
+}
+
+.gap {
+  color: var(--muted);
+  margin-right: 4px;
+}
+
+.credentials {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px 16px;
+  margin: 0;
+  padding: 14px 16px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.credentials dt {
+  color: var(--muted);
+}
+
+.credentials dd {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 18px;
+  user-select: all;
+}
+
+.passage-preview {
+  white-space: pre-wrap;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-family: var(--mono);
+  margin: 0 0 8px;
+}
+
+/* ---------- Pills and notices ---------- */
+
+.pill {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  white-space: nowrap;
+  border: 1px solid var(--line);
+  color: var(--muted);
+}
+
+.pill-ok {
+  color: var(--ok);
+  border-color: color-mix(in srgb, var(--ok) 45%, transparent);
+  background: color-mix(in srgb, var(--ok) 12%, transparent);
+}
+
+.pill-bad {
+  color: var(--bad);
+  border-color: color-mix(in srgb, var(--bad) 45%, transparent);
+  background: color-mix(in srgb, var(--bad) 12%, transparent);
+}
+
+.pill-warn {
+  color: var(--hero);
+  border-color: color-mix(in srgb, var(--caret) 55%, transparent);
+  background: color-mix(in srgb, var(--caret) 14%, transparent);
+}
+
+.pill-info {
+  color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+.notice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 16px;
+  margin: 8px 0 16px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--card);
+}
+
+.notice > div:first-child {
+  flex: 1;
+}
+
+.notice-ok {
+  border-color: color-mix(in srgb, var(--ok) 50%, transparent);
+}
+
+.notice-bad {
+  border-color: color-mix(in srgb, var(--bad) 55%, transparent);
+  background: color-mix(in srgb, var(--bad) 10%, var(--card));
+}
+
+.notice-warn {
+  border-color: color-mix(in srgb, var(--caret) 60%, transparent);
+  background: color-mix(in srgb, var(--caret) 10%, var(--card));
+}
+
+.notice-info {
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+.hosted-banner {
+  margin-bottom: 8px;
+}
+
+.hosted-title {
+  text-align: center;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 14px;
+  margin: 0 0 10px;
+}
+
+/* ---------- Dialog ---------- */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: start center;
+  padding: 8vh 16px 16px;
+  overflow-y: auto;
+  background: rgb(0 0 0 / 0.55);
+}
+
+.modal {
+  width: min(480px, 100%);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 18px 22px 22px;
+  box-shadow: 0 20px 60px rgb(0 0 0 / 0.4);
+}
+
+.modal.wide {
+  width: min(760px, 100%);
+}
+
+.modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.modal-head h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+/* ---------- Login ---------- */
+
+.login-page {
+  min-height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 24px 16px;
+}
+
+.login-card {
+  width: min(400px, 100%);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 28px 28px 22px;
+}
+
+.login-card h1 {
+  margin: 0;
+  font-size: 26px;
+}
+
+.login-card .tabs {
+  margin: 18px 0 14px;
+  border-bottom: 1px solid var(--line);
+  gap: 4px;
+}
+
+.login-card .tab {
+  flex: 1;
+  margin-bottom: -1px;
+}
+
+.recent {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 14px;
+  font-size: 13px;
+}
+
+.connection {
+  margin: 14px 0 6px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.connection.on::before,
+.connection.off::before {
+  content: "● ";
+}
+
+.connection.on::before {
+  color: var(--ok);
+}
+
+.connection.off::before {
+  color: var(--caret);
+}
+
+.server-box {
+  margin-top: 10px;
+}
+
+.narrow-form {
+  max-width: 360px;
+  margin-top: 8px;
+}
+
+@media (max-width: 720px) {
+  .nav {
+    order: 5;
+    width: 100%;
+    margin-left: 0;
+    overflow-x: auto;
+  }
+}

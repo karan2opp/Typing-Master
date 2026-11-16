@@ -1,0 +1,6 @@
+{
+  "extends": "../../tsconfig.base.json",
+  // DOM types because the server's tests import the shared client code, which uses IndexedDB and fetch.
+  "compilerOptions": { "types": ["node"], "lib": ["ES2023", "DOM"], "jsx": "preserve" },
+  "include": ["src"]
+}

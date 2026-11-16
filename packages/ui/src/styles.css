@@ -1,0 +1,629 @@
+:root {
+  --bg: #f6f7f9;
+  --card: #ffffff;
+  --text: #1c2330;
+  --muted: #6b7587;
+  --line: #e1e5ec;
+  --accent: #2563eb;
+  --accent-text: #ffffff;
+  --ok: #16803c;
+  --bad: #c62828;
+  --bad-bg: #fde8e8;
+  --caret: #d19900;
+  /* Big result numbers: a deeper amber so it still reads on a light page. */
+  --hero: #a87700;
+  --mono: "Roboto Mono", "Cascadia Mono", Consolas, monospace;
+  /* Chart series; validated for colour-blind separation on --bg. */
+  --series-wpm: #b07f00;
+  --series-burst: #4f74c8;
+  --series-error: #c8336a;
+  --grid: #e3e7ee;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1420;
+    --card: #182030;
+    --text: #e6eaf2;
+    --muted: #93a0b8;
+    --line: #2a3447;
+    --accent: #5b8def;
+    --accent-text: #0b1020;
+    --ok: #5fd08a;
+    --bad: #ff8a8a;
+    --bad-bg: #4a2327;
+    --caret: #e2b714;
+    --hero: #e2b714;
+    --series-wpm: #b88e08;
+    --series-burst: #5f86d8;
+    --series-error: #e0457b;
+    --grid: #1f2738;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+}
+
+.app {
+  max-width: 1000px;
+  min-height: 100%;
+  margin: 0 auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/*
+ * While typing (and on the result), the content sits in the middle of the
+ * window, a little above true centre, so the text is at eye level.
+ */
+main.centered {
+  justify-content: center;
+  padding-bottom: 12vh;
+}
+
+/* ---------- Filter bar (Monkeytype-style) ---------- */
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+  font-family: var(--mono);
+  font-size: 13px;
+  transition: opacity 200ms;
+}
+
+.filter-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  background: var(--card);
+}
+
+.filters button,
+.lang {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: 0;
+  padding: 6px 10px;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 13px;
+  transition: color 120ms;
+}
+
+.filters button:hover,
+.lang:hover {
+  color: var(--text);
+}
+
+.filters button[aria-pressed="true"] {
+  color: var(--hero);
+}
+
+.lang {
+  position: relative;
+  cursor: pointer;
+}
+
+.lang select {
+  appearance: none;
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.lang select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.lang select option,
+.lang select optgroup {
+  background: var(--card);
+  color: var(--text);
+}
+
+.glyph {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.glyph.bold {
+  font-weight: 700;
+}
+
+.custom {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+}
+
+.custom input {
+  width: 7ch;
+  padding: 5px 8px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--card);
+  color: var(--text);
+  font: inherit;
+}
+
+.lang-row {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 8px;
+  transition: opacity 200ms;
+}
+
+/* Options get out of the way once typing starts. */
+.faded {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0 16px;
+}
+
+.top h1 {
+  font-size: 22px;
+  margin: 0;
+}
+
+.badge {
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  color: var(--muted);
+}
+
+button {
+  font: inherit;
+  color: var(--text);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 14px;
+  cursor: pointer;
+}
+
+button:hover {
+  border-color: var(--accent);
+}
+
+button.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-text);
+}
+
+button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 8px 6px;
+  border-bottom: 1px solid var(--line);
+}
+
+th {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+/* The only thing shown while typing besides the text. */
+.timer {
+  font-family: var(--mono);
+  font-size: 28px;
+  line-height: 1;
+  color: var(--hero);
+  margin-bottom: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.restart-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 28px;
+}
+
+/* Faint until Tab (or the mouse) brings it forward. */
+.restart {
+  display: grid;
+  place-items: center;
+  background: none;
+  border: 0;
+  border-radius: 8px;
+  padding: 10px 22px;
+  color: var(--muted);
+  opacity: 0.6;
+  transition: background 120ms, opacity 120ms, color 120ms;
+}
+
+.restart:hover,
+.restart:focus {
+  opacity: 1;
+  color: var(--text);
+  background: var(--line);
+  outline: none;
+}
+
+/* Exactly three lines are visible; the line being typed is the middle one. */
+.passage {
+  height: 4.8em;
+  overflow: hidden;
+  font-family: var(--mono);
+  font-size: 28px;
+  line-height: 1.6em;
+  white-space: pre-wrap;
+  word-break: break-word;
+  user-select: none;
+  position: relative;
+}
+
+.passage.hindi {
+  font-family: "Noto Sans Devanagari", "Nirmala UI", Mangal, sans-serif;
+  font-size: 28px;
+  line-height: 1.8em;
+  height: 5.4em;
+}
+
+.ch {
+  color: var(--muted);
+}
+
+.ch.ok {
+  color: var(--ok);
+}
+
+.ch.bad {
+  color: var(--bad);
+  background: var(--bad-bg);
+  border-radius: 2px;
+}
+
+/* Letters skipped by pressing Space early. */
+.ch.miss {
+  color: var(--bad);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+/*
+ * Thick bar caret. One element moved with transform (compositor only), so
+ * moving it never triggers layout. The 85ms linear slide matches Monkeytype's
+ * smooth caret as measured frame by frame; 0ms makes it jump instantly.
+ */
+.caret {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--caret);
+  pointer-events: none;
+  transition: transform var(--caret-glide, 85ms) linear;
+  will-change: transform;
+}
+
+.passage.idle .caret {
+  animation: blink 1s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* ---------- Results (Monkeytype-style) ---------- */
+
+.results {
+  font-family: var(--mono);
+}
+
+.res-top {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+.res-label {
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.2;
+}
+
+.res-hero .res-label {
+  font-size: 32px;
+}
+
+.res-big {
+  color: var(--hero);
+  font-size: 64px;
+  line-height: 1;
+  margin-bottom: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.res-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px 32px;
+  margin: 24px 0 28px;
+}
+
+.res-value {
+  color: var(--hero);
+  font-size: 32px;
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+
+.res-small {
+  color: var(--hero);
+  font-size: 16px;
+  line-height: 1.3;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.res-table {
+  margin-top: 20px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.res-table summary {
+  cursor: pointer;
+  text-align: center;
+}
+
+.res-table table {
+  margin-top: 12px;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.res-table tr.this-test td {
+  color: var(--caret);
+}
+
+/* ---------- Hover messages ---------- */
+
+.tip {
+  position: relative;
+  outline: none;
+}
+
+.tip:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.tip-box {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 0;
+  z-index: 10;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: #000;
+  border: 1px solid #2a2f3a;
+  color: #fff;
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.35;
+  white-space: pre;
+  opacity: 0;
+  transform: translateY(4px);
+  transition:
+    opacity 120ms,
+    transform 120ms;
+  pointer-events: none;
+}
+
+.tip-box.right {
+  left: auto;
+  right: 0;
+}
+
+.tip:hover .tip-box,
+.tip:focus-visible .tip-box {
+  opacity: 1;
+  transform: none;
+}
+
+.pager {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.pager button {
+  background: none;
+  border: 0;
+  padding: 4px 10px;
+  color: var(--muted);
+  font: inherit;
+  font-size: 16px;
+}
+
+.pager button:not(:disabled):hover {
+  color: var(--text);
+}
+
+.pager span {
+  min-width: 7ch;
+  text-align: center;
+}
+
+/* ---------- Chart ---------- */
+
+.chart {
+  min-width: 0;
+}
+
+.legend {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 16px;
+  list-style: none;
+  margin: 0 0 4px;
+  padding: 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.legend li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.chart-plot {
+  position: relative;
+  height: 220px;
+}
+
+.chart-plot svg {
+  display: block;
+  outline: none;
+}
+
+.chart-plot svg:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.chart .grid {
+  stroke: var(--grid);
+  stroke-width: 1;
+}
+
+.chart .tick,
+.chart .axis-title {
+  fill: var(--muted);
+  font-family: var(--mono);
+  font-size: 11px;
+}
+
+.chart .crosshair {
+  stroke: var(--muted);
+  stroke-width: 1;
+}
+
+.chart .ring {
+  stroke: var(--bg);
+  stroke-width: 2;
+}
+
+.tooltip {
+  position: absolute;
+  /* Below the errors strip so it never hides an error marker. */
+  top: 34px;
+  min-width: 120px;
+  padding: 8px 10px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgb(0 0 0 / 0.15);
+  font-size: 13px;
+  pointer-events: none;
+}
+
+.tooltip-head {
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.tooltip-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tooltip-row strong {
+  color: var(--text);
+  min-width: 2.5ch;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.tooltip-row span {
+  color: var(--muted);
+}
+
+@media (max-width: 720px) {
+  .res-top {
+    grid-template-columns: 1fr;
+  }
+
+  .res-hero {
+    display: grid;
+    grid-template-columns: auto auto;
+    column-gap: 24px;
+  }
+}

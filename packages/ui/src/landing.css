@@ -1,0 +1,219 @@
+/* The website's first page. Everything is scoped to .landing so it cannot touch the app's own styles. */
+.landing {
+  color: var(--text);
+  line-height: 1.6;
+  padding-bottom: 8px;
+}
+.landing .lp-wrap {
+  width: min(1040px, 100% - 32px);
+  margin-inline: auto;
+}
+
+.landing .lp-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 0;
+}
+.landing .lp-brand {
+  margin-right: auto;
+  font: 700 18px var(--mono);
+}
+.landing .lp-brand b {
+  color: var(--caret);
+}
+.landing .lp-link {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: var(--muted);
+  font-size: 15px;
+  text-decoration: none;
+  cursor: pointer;
+}
+.landing .lp-link:hover {
+  color: var(--text);
+}
+
+.landing .lp-hero {
+  padding: 48px 0 32px;
+  text-align: center;
+}
+.landing .lp-hero h1 {
+  margin: 0 0 16px;
+  font-size: clamp(32px, 6vw, 52px);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+.landing .lp-lead {
+  margin: 0 auto 28px;
+  max-width: 640px;
+  font-size: 18px;
+  color: var(--muted);
+}
+
+.landing .lp-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+.landing .lp-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 28px;
+  border-radius: 10px;
+  border: 2px solid var(--accent);
+  background: var(--accent);
+  color: var(--accent-text);
+  font: 600 17px inherit;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 6px 20px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+.landing .lp-btn:hover {
+  filter: brightness(1.08);
+}
+.landing .lp-btn:focus-visible {
+  outline: 3px solid var(--caret);
+  outline-offset: 3px;
+}
+.landing .lp-btn.ghost {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--line);
+  box-shadow: none;
+}
+.landing .lp-btn.ghost:hover {
+  border-color: var(--accent);
+  filter: none;
+}
+.landing .lp-btn svg {
+  width: 20px;
+  height: 20px;
+}
+.landing .lp-meta {
+  margin-top: 14px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.landing .lp-demo {
+  margin: 40px auto 0;
+  max-width: 720px;
+  padding: 24px 28px;
+  text-align: left;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  font: 22px/1.7 var(--mono);
+  color: var(--muted);
+}
+.landing .lp-demo .ok {
+  color: var(--text);
+}
+.landing .lp-demo .caret {
+  border-left: 2px solid var(--caret);
+  margin-left: -1px;
+  animation: lp-blink 1s steps(1) infinite;
+}
+@keyframes lp-blink {
+  50% {
+    border-color: transparent;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .landing .lp-demo .caret {
+    animation: none;
+  }
+}
+
+.landing section {
+  padding: 40px 0;
+}
+.landing h2 {
+  margin: 0 0 24px;
+  font-size: 28px;
+  letter-spacing: -0.01em;
+  text-align: center;
+}
+
+.landing .lp-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+.landing .lp-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 22px;
+}
+.landing .lp-card h3 {
+  margin: 0 0 6px;
+  font-size: 18px;
+}
+.landing .lp-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.landing .lp-steps {
+  list-style: none;
+  counter-reset: lp-step;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 640px;
+  display: grid;
+  gap: 12px;
+}
+.landing .lp-steps li {
+  counter-increment: lp-step;
+  position: relative;
+  padding: 16px 18px 16px 58px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+.landing .lp-steps li::before {
+  content: counter(lp-step);
+  position: absolute;
+  left: 16px;
+  top: 14px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--accent);
+  color: var(--accent-text);
+  font: 700 15px var(--mono);
+}
+
+.landing .lp-note {
+  max-width: 640px;
+  margin: 20px auto 0;
+  padding: 14px 18px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--muted);
+  font-size: 15px;
+}
+.landing .lp-note b {
+  color: var(--text);
+}
+
+.landing .lp-cta {
+  text-align: center;
+}
+.landing .lp-footer {
+  margin-top: 24px;
+  padding: 28px 0 40px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 14px;
+  border-top: 1px solid var(--line);
+}
