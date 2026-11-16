@@ -9,8 +9,8 @@ import "@fontsource/roboto-mono/400.css";
 import "./styles.css";
 import "./app.css";
 
-function Root({ platform }: { platform: "web" | "desktop" }) {
-  const { auth, serverUrl } = useServices();
+function Root({ platform, downloadUrl }: { platform: "web" | "desktop"; downloadUrl?: string }) {
+  const { auth } = useServices();
   // undefined: still reading the saved session; null: nobody is logged in.
   const [session, setSession] = useState<Session | null | undefined>(undefined);
   // Whether the visitor has left the landing page (web only).
@@ -63,7 +63,9 @@ function Root({ platform }: { platform: "web" | "desktop" }) {
 
   if (session === undefined) return <div className="splash">Typing Master</div>;
   // The website opens on the landing page; the desktop app goes straight to login.
-  if (!session && platform === "web" && !entered) return <Landing serverUrl={serverUrl.get()} onStart={() => setEntered(true)} />;
+  if (!session && platform === "web" && !entered && downloadUrl) {
+    return <Landing downloadUrl={downloadUrl} onStart={() => setEntered(true)} />;
+  }
   if (!session) return <LoginScreen platform={platform} onSession={setSession} />;
   return <Shell platform={platform} session={session} onSession={setSession} onLogout={logout} />;
 }
@@ -72,10 +74,19 @@ function Root({ platform }: { platform: "web" | "desktop" }) {
  * The whole app: login, then the student, teacher or admin screens.
  * `defaultServerUrl` is where the server is unless this computer was told otherwise.
  */
-export function App({ platform, defaultServerUrl }: { platform: "web" | "desktop"; defaultServerUrl: string }) {
+export function App({
+  platform,
+  defaultServerUrl,
+  downloadUrl,
+}: {
+  platform: "web" | "desktop";
+  defaultServerUrl: string;
+  /** Where the landing page's download button goes. */
+  downloadUrl?: string;
+}) {
   return (
     <ServicesProvider defaultServerUrl={defaultServerUrl}>
-      <Root platform={platform} />
+      <Root platform={platform} downloadUrl={downloadUrl} />
     </ServicesProvider>
   );
 }

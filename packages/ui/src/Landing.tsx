@@ -1,7 +1,5 @@
 import "./landing.css";
 
-const INSTALLER = "TypingMaster-Setup.exe";
-
 const FEATURES = [
   ["English and Hindi", "Practise in either language, with word lists from easy everyday words to harder ones."],
   ["Tests from your teacher", "Take timed tests set for your class, in the time window your teacher chooses."],
@@ -17,12 +15,8 @@ const Icon = ({ d }: { d: string }) => (
   </svg>
 );
 
-/**
- * The first page of the website: use the typing app here in the browser, or download the Windows app.
- * `serverUrl` is where the installer is served from (the same server as the API).
- */
-export function Landing({ onStart, serverUrl }: { onStart(): void; serverUrl: string }) {
-  const download = `${serverUrl.replace(/\/+$/, "")}/${INSTALLER}`;
+/** The first page of the website: use the typing app here in the browser, or download the Windows app. */
+export function Landing({ onStart, downloadUrl: download }: { onStart(): void; downloadUrl: string }) {
   const actions = (
     <div className="lp-actions">
       <button type="button" className="lp-btn" onClick={onStart}>
